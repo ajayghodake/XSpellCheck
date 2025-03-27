@@ -8,7 +8,7 @@ const SpellCheckApp = () => {
   };
 
   const [inputText, setInputText] = useState("");
-  const [spellWord, setSpellWord] = useState("");
+  const [spellWord, setSpellWord] = useState("")
 
  // const handleInputText = (e) => {
   //   let text = e.target.value;
@@ -30,12 +30,12 @@ const SpellCheckApp = () => {
     let words = text.split(" ");
 
     const correctedWords = words.map(
-      (word) => customDictionary[word.toLowerCase() || ""]
+      (word) => customDictionary[word.toLowerCase()]
     );
 
-    const correctedText = correctedWords.join(" ");
+    const correctedText = correctedWords.join("");
 
-    setSpellWord(correctedText || " ");
+    setSpellWord(correctedText);
   };
 
   return (
@@ -50,7 +50,9 @@ const SpellCheckApp = () => {
         rows={5}
         cols={50}
       ></textarea>
-      <p>Did you mean: {spellWord === " " ? ("") : (<strong>{spellWord + " " +"?"}</strong>)}</p>
+      {spellWord && (
+        <p>Did you mean: <strong>{spellWord}</strong>?</p>
+      )}
     </>
   );
 };
