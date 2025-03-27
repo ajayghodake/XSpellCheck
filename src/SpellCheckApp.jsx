@@ -8,34 +8,40 @@ const SpellCheckApp = () => {
   };
 
   const [inputText, setInputText] = useState("");
-  const [spellWord, setSpellWord] = useState("")
+  const [suggestedText, setSuggestedText] = useState("");
 
- // const handleInputText = (e) => {
+
+  // // Method 1
+  // const handleInputText = (e) => {
   //   let text = e.target.value;
   //   setInputText(text);
-
-  //   let words = text.split(" ");
-  //   const correctedWords = words.map((word) => customDictionary[word.toLowerCase() || word]);
-
-  //   const correctedText = correctedWords.join(" ");
-
-  //   const firstCorrection = words.find((word, index) => word !== correctedText[index]);
-  //   setSpellWord(firstCorrection || "");
+  //   let wordsArray = text.split(" ");
+  //   const correctedWord = wordsArray.map(
+  //     (word) => customDictionary[word.toLowerCase()]
+  //   );
+  //   const correctedText = correctedWord.join("");
+  //   setSuggestedText(correctedText);
   // };
 
+  // // Method 2
   const handleInputText = (e) => {
     let text = e.target.value;
     setInputText(text);
 
     let words = text.split(" ");
+    console.log("Words", words);
 
     const correctedWords = words.map(
-      (word) => customDictionary[word.toLowerCase()]
+      (word) => customDictionary[word.toLowerCase()] || word
     );
+    console.log('correctedWords', correctedWords);
 
-    const correctedText = correctedWords.join("");
+    const firstCorrection = correctedWords.find(
+      (word, index) => word !== words[index]
+    );
+    console.log(firstCorrection);
 
-    setSpellWord(correctedText);
+    setSuggestedText(firstCorrection || "");
   };
 
   return (
@@ -50,8 +56,10 @@ const SpellCheckApp = () => {
         rows={5}
         cols={50}
       ></textarea>
-      {spellWord && (
-        <p>Did you mean: <strong>{spellWord}</strong>?</p>
+      {suggestedText && (
+        <p>
+          Did you mean: <strong>{suggestedText}</strong>?
+        </p>
       )}
     </>
   );
